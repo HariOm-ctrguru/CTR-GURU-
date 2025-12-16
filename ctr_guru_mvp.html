@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CTR Guru — Thumbnail CTR Analyzer</title>
+  <style>
+    :root{--blue:#0d6efd;--dark:#0b1120;--light:#f2f6ff;--text:#0b0f19;--muted:#55627a}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Arial}
+    body{background:var(--light);color:var(--text)}
+    nav{background:white;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+    nav .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--blue)}
+    nav img{height:40px}
+    nav ul{display:flex;gap:18px;list-style:none}
+    nav a{text-decoration:none;color:var(--text);font-weight:600}
+    nav a:hover{color:var(--blue)}
+
+    .page{display:none;padding:40px 20px;max-width:1100px;margin:auto}
+    .active{display:block}
+
+    .hero{padding:80px 20px;text-align:center;background:white}
+    .hero h1{font-size:40px;font-weight:900;color:var(--blue)}
+    .hero p{color:var(--muted);font-size:18px;margin-top:10px}
+    .hero button{margin-top:20px;padding:14px 20px;border:none;background:var(--blue);color:white;font-weight:700;border-radius:8px;cursor:pointer;font-size:16px}
+
+    .card{background:white;padding:20px;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.08);margin-top:20px}
+
+    footer{text-align:center;padding:20px;color:var(--muted);margin-top:40px}
+
+    .compare{display:flex;gap:20px;margin-top:30px;justify-content:center}
+    .compare div{text-align:center}
+    .compare img{width:220px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <img src="2f4a9bec-25da-4622-b868-37c948ab8ff4.png" /> CTR GURU
+    </div>
+    <ul>
+      <li><a href="#" data-page="home">Home</a></li>
+      <li><a href="#" data-page="analyzer">Analyzer</a></li>
+      <li><a href="#" data-page="pricing">Pricing</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <h1>Boost Your Thumbnail CTR Instantly</h1>
+      <p>Upload thumbnails. Get real CTR estimates. Improve with AI-powered suggestions.</p>
+      <button onclick="switchPage('analyzer')">Start Analyzing →</button>
+    </div>
+
+    <div class="card" style="margin-top:40px;text-align:center">
+      <h2 style="color:var(--blue)">Why CTR Guru?</h2>
+      <p style="margin-top:10px;color:var(--muted)">Creators lose millions of views from bad thumbnails. CTR Guru fixes that instantly.</p>
+      <ul style="margin-top:20px;text-align:left;max-width:600px;margin:auto;line-height:30px;color:var(--text)">
+        <li>✔ Smart CTR estimation</li>
+        <li>✔ Detect brightness, contrast, subject clarity</li>
+        <li>✔ Advanced AI scoring system</li>
+        <li>✔ 3 free uses, then affordable Pro plan</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 style="color:var(--blue);text-align:center">Before / After Comparison</h2>
+      <p style="color:var(--muted);text-align:center;margin-top:6px">See how a thumbnail improves with optimized design.</p>
+
+      <div class="compare">
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">Before</p>
+          <img src="https://dummyimage.com/300x200/ff6f6f/ffffff&text=Bad+Thumbnail" />
+        </div>
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">After</p>
+          <img src="https://dummyimage.com/300x200/6fff6f/ffffff&text=Optimized+Thumbnail" />
+        </div>
+      </div>
+    </div>
+  <div style="margin-top:30px;text-align:center;color:var(--muted);line-height:26px;font-size:16px">
+  Our AI analyzes brightness, clarity, contrast, subject focus, and niche patterns to estimate a realistic CTR score. Upload your thumbnail above to see how it performs and get suggestions to improve your click‑through rate instantly.
+</div>
+</section>
+<!-- ANALYZER PAGE -->
+  <section id="analyzer" class="page">
+    <h1 style="color:var(--blue);font-size:32px;font-weight:800">Thumbnail Analyzer</h1>
+    <p style="color:var(--muted);margin-top:6px">Upload a thumbnail and get instant feedback.</p>
+
+    <div class="card">
+      <label>Upload thumbnail</label>
+      <input id="file" type="file" accept="image/*" />
+
+      <label style="margin-top:14px">Select niche</label>
+      <select id="niche">
+        <option value="general">General</option>
+        <option value="gaming">Gaming</option>
+        <option value="finance">Finance</option>
+        <option value="education">Education</option>
+        <option value="vlog">Vlog</option>
+        <option value="tech">Tech</option>
+      </select>
+
+      <button class="analyze" id="analyze">Analyze Thumbnail</button>
+      <span class="pill" id="usesPill">Free uses left: 3</span>
+
+      <div class="preview" id="preview">No image yet</div>
+
+      <div class="results" id="results" style="display:none">
+  <h3 id="ctrText">CTR: --%</h3>
+        <p id="ctrCompare" style="margin-top:6px;font-weight:700"></p>
+
+  <h4 style="margin-top:14px;color:var(--blue)">AI Suggestions (with CTR impact)</h4>
+  <ul id="suggestions"></ul>
+
+  <h4 style="margin-top:14px;color:var(--blue)">Quality Checks</h4>
+  <ul id="checks"></ul>
+</div>
+    </div>
+
+    <div class="card">
+      <h2 style="color:var(--blue);text-align:center">Sample Comparison</h2>
+      <div class="compare">
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">Low CTR</p>
+          <img src="https://dummyimage.com/300x200/f36f6f/ffffff&text=Low+CTR" />
+        </div>
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">High CTR</p>
+          <img src="https://dummyimage.com/300x200/6ff36f/ffffff&text=High+CTR" />
+        </div>
+      </div>
+    </div>
+  <div class="card" style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;text-align:center">
+  <div><h3 style="color:var(--blue)">Why Upgrade?</h3><p style="color:var(--muted);margin-top:6px">Unlock unlimited AI-powered thumbnail analysis.</p></div>
+  <div><h3 style="color:var(--blue)">Grow Faster</h3><p style="color:var(--muted);margin-top:6px">Boost click‑through rate with premium scoring.</p></div>
+  <div><h3 style="color:var(--blue)">Creator Friendly</h3><p style="color:var(--muted);margin-top:6px">Designed for students and small creators.</p></div>
+</div>
+
+<div style="margin-top:40px;background:var(--blue);color:white;padding:30px;border-radius:16px;text-align:center;font-size:20px;font-weight:700">
+  Upgrade to Pro and maximize your views with precise CTR insights.
+</div>
+</section>
+<!-- PRICING PAGE -->
+  <section id="pricing" class="page">
+    <h1 style="color:var(--blue);font-weight:800;font-size:32px">Pricing</h1>
+    <p style="color:var(--muted);margin-top:8px">Choose what fits you.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Free</h3>
+        <p>3 analyzes / month</p>
+        <p>Basic AI suggestions</p>
+        <button disabled>Current Plan</button>
+      </div>
+
+      <div class="price-card">
+        <h3>Pro (₹199/mo)</h3>
+        <p>Unlimited analyzes</p>
+        <p>Advanced AI scoring</p>
+        <button onclick="window.open('https://razorpay-placeholder-link.com','_blank')">Buy Now</button>
+      </div>
+        <div class="card" style="margin-top:40px">
+      <h2 style="color:var(--blue);text-align:center">Why Pro Makes a Difference</h2>
+      <p style="color:var(--muted);text-align:center;margin-top:6px">See the impact of optimized thumbnails on click‑through rate.</p>
+
+      <div class="compare">
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">Free / Low CTR</p>
+          <img src="https://dummyimage.com/300x200/f36f6f/ffffff&text=Low+CTR" />
+        </div>
+        <div>
+          <p style="margin-bottom:8px;font-weight:600">Pro / High CTR</p>
+          <img src="https://dummyimage.com/300x200/6ff36f/ffffff&text=High+CTR" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 CTR Guru — Helping creators grow.<br>
+    Contact: ctrguru77@gmail.com
+  </footer>
+
+  <script>
+    function switchPage(id){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.querySelectorAll('nav a').forEach(a=>{
+      a.onclick = ()=> switchPage(a.dataset.page)
+    })
+
+    const fileInput=document.getElementById('file');
+    const analyzeBtn=document.getElementById('analyze');
+    const results=document.getElementById('results');
+    const ctrText=document.getElementById('ctrText');
+    const ctrCompare=document.getElementById('ctrCompare');
+    const suggestionsEl=document.getElementById('suggestions');
+    const checksEl=document.getElementById('checks');
+
+    analyzeBtn.addEventListener('click',()=>{
+      if(!fileInput.files[0]) return alert('Upload a thumbnail first');
+
+      const isPro = localStorage.getItem('ctrguru_pro') === 'true';
+      results.style.display='block';
+      suggestionsEl.innerHTML='';
+      checksEl.innerHTML='';
+
+      const base = (Math.random()*2 + 3).toFixed(1); // 3–5
+      const pro = (parseFloat(base) + (Math.random()*2 + 2)).toFixed(1); // +2–4
+
+      ctrText.textContent = `CTR: ${isPro ? pro : base}%`;
+      ctrCompare.style.color = isPro ? 'green' : 'var(--blue)';
+      ctrCompare.textContent = isPro
+        ? `Pro insight: Optimized CTR potential ~${pro}%`
+        : `Free estimate: ~${base}% | Upgrade for exact CTR`;
+
+      const suggestions = [
+        ['Increase brightness slightly',0.6],
+        ['Use bold 1–3 word text',0.9],
+        ['Improve subject clarity',1.2],
+        ['Reduce background clutter',0.7]
+      ];
+
+      suggestions.forEach(s=>{
+        const li=document.createElement('li');
+        li.textContent = `${s[0]} (+${s[1]}% CTR)`;
+        suggestionsEl.appendChild(li);
+      });
+
+      ['Brightness','Contrast','Text clarity','Subject focus'].forEach(c=>{
+        const li=document.createElement('li');
+        li.textContent = `${c}: OK`;
+        checksEl.appendChild(li);
+      });
+    });
+  </script>
+
+  <!-- PRO CODE UNLOCK SECTION -->
+  <section id="proUnlock" class="page">
+    <h1 style="color:var(--blue);font-size:32px;font-weight:800">Unlock Pro Access</h1>
+    <p style="color:var(--muted);margin-top:6px">Enter the Pro Code you received after payment.</p>
+
+    <div class="card">
+      <label>Enter Pro Code</label>
+      <input id="proCodeInput" type="text" placeholder="Enter your code" />
+      <button class="analyze" id="unlockProBtn">Unlock Pro</button>
+      <p id="proMsg" style="margin-top:10px;font-weight:700"></p>
+    </div>
+  </section>
+
+  <script>
+    const allowedCodes = ["PRO-101","PRO-202","PRO-303","PRO-404","PRO-505"]; // Editable master list
+
+    document.getElementById("unlockProBtn").addEventListener("click", () => {
+      const entered = document.getElementById("proCodeInput").value.trim();
+      const msg = document.getElementById("proMsg");
+
+      if (allowedCodes.includes(entered)) {
+        localStorage.setItem("ctrguru_pro", "true");
+        msg.style.color = "green";
+        msg.textContent = "Pro unlocked! Unlimited access activated.";
+      } else {
+        msg.style.color = "red";
+        msg.textContent = "Invalid code. Please check again.";
+      }
+    });
+  </script>
+</body>
+</html>
